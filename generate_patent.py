@@ -233,4 +233,4 @@ def create_patent_doc(filename):
     print(f"Successfully generated better patent doc at {filename}")
 
 if __name__ == '__main__':
-    create_patent_doc(r"d:\SleepAnalyzer\Professional_Patent_Draft_v2_numbered.docx")
+    create_patent_doc(r"d:\SleepAnalyzer\Professional_Patent_Draft_v2.docx")
