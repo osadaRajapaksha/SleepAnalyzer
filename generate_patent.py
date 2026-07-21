@@ -37,7 +37,7 @@ def create_patent_doc(filename):
     doc = Document()
     
     # Title
-    title = doc.add_heading('CONTINUOUS MULTI-TARGET PHYSIOLOGICAL MONITORING', 0)
+    title = doc.add_heading('SYSTEM, METHOD, AND COMPUTER-READABLE MEDIUM FOR LATENT SOURCE RECOVERY AND CONTINUOUS IDENTITY ATTRIBUTION IN MULTI-TARGET PHYSIOLOGICAL MONITORING', 0)
     title.alignment = WD_ALIGN_PARAGRAPH.CENTER
 
     # Field of Invention
@@ -233,4 +233,4 @@ def create_patent_doc(filename):
     print(f"Successfully generated better patent doc at {filename}")
 
 if __name__ == '__main__':
-    create_patent_doc(r"d:\SleepAnalyzer\Professional_Patent_Draft_v4.docx")
+    create_patent_doc(r"d:\SleepAnalyzer\Professional_Patent_Draft_v2_numbered.docx")
