@@ -36,25 +36,31 @@ def add_claim(doc, number, text):
 def create_patent_doc(filename):
     doc = Document()
     
-    # Title
-    title = doc.add_heading('SYSTEM, METHOD, AND COMPUTER-READABLE MEDIUM FOR LATENT SOURCE RECOVERY AND CONTINUOUS IDENTITY ATTRIBUTION IN MULTI-TARGET PHYSIOLOGICAL MONITORING', 0)
-    title.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    # Description Main Heading
+    add_heading(doc, 'DESCRIPTION', level=1).alignment = WD_ALIGN_PARAGRAPH.CENTER
+    
+    # Title of the invention
+    add_heading(doc, 'Title of the invention', level=2)
+    add_paragraph(doc, 'MULTI-TARGET PHYSIOLOGICAL MONITORING SYSTEM')
 
-    # Field of Invention
-    add_heading(doc, 'FIELD OF THE INVENTION', level=1)
+    # Technical Field
+    add_heading(doc, 'Technical Field', level=2)
     add_paragraph(doc, 
         "[0001] The present invention relates generally to the field of non-invasive physiological monitoring. More specifically, "
         "the invention relates to signal processing architectures for multi-occupant environments, providing systems and methods "
         "for recovering, attributing, and maintaining the continuous identity of latent physiological signals extracted from "
         "mixed sensor arrays.", indent=True)
 
-    # Background
-    add_heading(doc, 'BACKGROUND OF THE INVENTION', level=1)
+    # Background art
+    add_heading(doc, 'Background art', level=2)
     add_paragraph(doc, 
         "[0002] Non-invasive physiological monitoring, particularly sleep monitoring using under-mattress sensors, has gained significant "
         "popularity. Such systems utilize force sensors, piezo-electric films, or strain gauges to detect ballistocardiographic "
         "(BCG) and respiratory efforts. However, when monitoring multiple subjects in close proximity (e.g., a double bed), "
         "the sensors inexorably capture a mixed signal containing overlapping physiological data and noise from both subjects.", indent=True)
+
+    # Technical problem
+    add_heading(doc, 'Technical problem', level=2)
     add_paragraph(doc,
         "[0003] Prior art systems attempt to resolve this cross-talk by relying on discrete movement events. For example, traditional "
         "methods determine which subject moved by comparing the signal amplitude of a sudden movement and measuring the time delay "
@@ -63,94 +69,91 @@ def create_patent_doc(filename):
         "fail dramatically during continuous periods of rest, simultaneous movement, or when occupants roll over into each other's "
         "respective sensor zones. Because traditional systems do not disentangle the continuous underlying physiological waveforms "
         "(i.e., the latent sources), they are highly susceptible to 'identity swapping'—where the system mistakenly assigns the "
-        "heart rate of Subject A to Subject B following a complex physical shift.", indent=True)
-    add_paragraph(doc,
-        "[0004] Therefore, there exists a profound need in the art for a physiological monitoring system capable of blindly separating "
+        "heart rate of Subject A to Subject B following a complex physical shift. Therefore, there exists a profound need in the art for a physiological monitoring system capable of blindly separating "
         "mixed physiological signals into continuous latent source streams, assigning those streams with probabilistic confidence, "
         "and persistently tracking identities to ensure high-fidelity longitudinal data.", indent=True)
 
-    # Summary
-    add_heading(doc, 'SUMMARY OF THE INVENTION', level=1)
+    # Technical Solution
+    add_heading(doc, 'Technical Solution', level=2)
     add_paragraph(doc, 
-        "[0005] The present invention satisfies the aforementioned need by disclosing a robust, three-engine signal processing architecture "
-        "capable of isolating and continuously tracking physiological signatures from multiple occupants in a shared environment.", indent=True)
-    add_paragraph(doc,
-        "[0006] In one aspect of the present invention, a Source Recovery Engine receives raw, mixed signal streams from a multi-channel "
-        "sensor array. Rather than searching for discrete amplitude thresholds indicative of movement, the Source Recovery Engine "
-        "applies a Blind Source Separation (BSS) algorithm, such as Independent Component Analysis (ICA), across sliding time windows "
-        "to mathematically reconstruct the latent, independent physiological waveforms of each occupant.", indent=True)
-    add_paragraph(doc,
-        "[0007] In another aspect, an Occupant Attribution Engine analyzes the reconstructed latent waveforms. It cross-correlates the "
-        "separated sources with the original mixed signals to determine a spatial footprint, fusing this with respiration "
+        "[0004] The present invention provides a robust, three-engine signal processing architecture "
+        "capable of isolating and continuously tracking physiological signatures from multiple occupants in a shared environment. "
+        "A Source Recovery Engine receives raw, mixed signal streams from a multi-channel "
+        "sensor array and applies a Blind Source Separation (BSS) algorithm, such as Independent Component Analysis (ICA), across sliding time windows "
+        "to mathematically reconstruct the latent, independent physiological waveforms of each occupant. "
+        "An Occupant Attribution Engine analyzes the reconstructed latent waveforms to determine a spatial footprint, fusing this with respiration "
         "synchronization and signal variance metrics. The engine outputs an identity assignment accompanied by a calculated "
-        "Attribution Confidence Score.", indent=True)
-    add_paragraph(doc,
-        "[0008] In yet another aspect, an Identity Persistence Engine acts as a temporal state machine. It evaluates the current identity "
-        "assignment against a historical identity mapping. The Identity Persistence Engine enforces a hysteresis constraint wherein "
-        "a proposed identity swap (e.g., indicating the occupants have traded physical positions) is rejected unless the Attribution "
+        "Attribution Confidence Score. An Identity Persistence Engine acts as a temporal state machine that enforces a hysteresis constraint wherein "
+        "a proposed identity swap is rejected unless the Attribution "
         "Confidence Score strictly exceeds a predefined high-confidence threshold. This effectively eliminates erroneous identity "
         "swapping caused by transient noise or simultaneous movement.", indent=True)
 
-    # Brief Description of the Drawings
-    add_heading(doc, 'BRIEF DESCRIPTION OF THE DRAWINGS', level=1)
-    add_paragraph(doc, "[0009] FIG. 1 illustrates an overview of the multi-target physiological monitoring system 100.", indent=True)
-    add_paragraph(doc, "[0010] FIG. 2 shows a block diagram of the three-engine signal processing architecture.", indent=True)
-    add_paragraph(doc, "[0011] FIG. 3 illustrates the operations within the Data Acquisition Layer 110.", indent=True)
-    add_paragraph(doc, "[0012] FIG. 4 is a flow diagram detailing the Source Recovery Engine 200 operations.", indent=True)
-    add_paragraph(doc, "[0013] FIG. 5 illustrates the application of the Blind Source Separation algorithm 204.", indent=True)
-    add_paragraph(doc, "[0014] FIG. 6 is a block diagram of the Occupant Attribution Engine 300 logic.", indent=True)
-    add_paragraph(doc, "[0015] FIG. 7 illustrates the Identity Persistence Engine 400 state machine.", indent=True)
-    add_paragraph(doc, "[0016] FIG. 8 is a flowchart of a method for continuous physiological monitoring.", indent=True)
+    # Brief description of drawings
+    add_heading(doc, 'Brief description of drawings', level=2)
+    add_paragraph(doc, "[0005] FIG. 1 illustrates an overview of the multi-target physiological monitoring system 100.", indent=True)
+    add_paragraph(doc, "[0006] FIG. 2 shows a block diagram of the three-engine signal processing architecture.", indent=True)
+    add_paragraph(doc, "[0007] FIG. 3 illustrates the operations within the Data Acquisition Layer 110.", indent=True)
+    add_paragraph(doc, "[0008] FIG. 4 is a flow diagram detailing the Source Recovery Engine 200 operations.", indent=True)
+    add_paragraph(doc, "[0009] FIG. 5 illustrates the application of the Blind Source Separation algorithm 204.", indent=True)
+    add_paragraph(doc, "[0010] FIG. 6 is a block diagram of the Occupant Attribution Engine 300 logic.", indent=True)
+    add_paragraph(doc, "[0011] FIG. 7 illustrates the Identity Persistence Engine 400 state machine.", indent=True)
+    add_paragraph(doc, "[0012] FIG. 8 is a flowchart of a method for continuous physiological monitoring.", indent=True)
 
-    # Detailed Description
-    add_heading(doc, 'DETAILED DESCRIPTION OF THE INVENTION', level=1)
+    # Advantageous effects
+    add_heading(doc, 'Advantageous effects', level=2)
+    add_paragraph(doc, 
+        "[0013] The present invention provides highly accurate continuous physiological monitoring for multiple subjects without requiring wearable sensors. "
+        "By recovering latent sources mathematically, it eliminates the false identity swaps common in prior art systems that rely merely on movement heuristics. "
+        "The rigorous state-machine persistence ensures that longitudinal metrics such as sleep stages and resting heart rates are accurately attributed "
+        "to the correct individual even during periods of heavy movement or close physical proximity.", indent=True)
+
+    # Mode for invention
+    add_heading(doc, 'Mode for invention', level=2)
     
     add_paragraph(doc,
-        "[0017] The following detailed description illustrates embodiments of the present disclosure. These embodiments are described "
+        "[0014] The following detailed description illustrates embodiments of the present disclosure. These embodiments are described "
         "in sufficient detail to enable those skilled in the art to practice the invention, and it is to be understood that other "
         "embodiments may be utilized and that logical, architectural, and algorithmic changes may be made without departing from "
         "the spirit or scope of the present invention. Reference is made to FIGS. 1-8 which illustrate various aspects of the invention.", indent=True)
 
-    add_heading(doc, 'The Data Acquisition Layer', level=2)
     add_paragraph(doc,
-        "[0018] Referring to FIG. 3, the multi-target physiological monitoring system 100 comprises a Data Acquisition Layer 110 having a sensor array 102 configured for placement in proximity to the subjects, for example a first subject 150a and a second subject 150b. In a preferred embodiment, "
-        "the sensor array 102 comprises at least a first high-sensitivity strain gauge 104a and a second high-sensitivity strain gauge 104b, piezoelectric strips, or hydraulic sensors "
-        "disposed beneath a mattress. A first analog-to-digital converter (ADC) 106a and a second analog-to-digital converter (ADC) 106b sample the signals at a high frequency (e.g., 100 Hz). "
-        "The raw data is continuously buffered into overlapping or non-overlapping temporal windows (e.g., 10-second intervals) "
-        "for batch processing within a buffer 112.", indent=True)
+        "[0015] Referring to FIG. 1 and FIG. 2, the multi-target physiological monitoring system 100 comprises a sensor array 101 configured for placement in proximity to the subjects, for example PERSON A and PERSON B. In a preferred embodiment, "
+        "the sensor array 101 comprises at least a first sensor 201 (S1), a second sensor 202 (S2), and optionally a third sensor 203 (S3) "
+        "disposed beneath a mattress. The signals from the sensor array 101 undergo analog signal conditioning 102. An analog-to-digital converter (ADC) 103 samples the signals at a high frequency. "
+        "The raw data is continuously buffered and passed to a processing unit 104.", indent=True)
 
-    add_heading(doc, 'The Source Recovery Engine', level=2)
     add_paragraph(doc,
-        "[0019] As shown in FIGS. 4 and 5, the buffered mixed signals from the first sensor 104a and the second sensor 104b are passed to the Source Recovery Engine 200. First, a bandpass filter 202 isolates specific frequency "
-        "bands of physiological interest, such as 0.8 Hz to 3.0 Hz for human heart rate. Following filtration, the Source Recovery Engine 200 executes "
-        "a Blind Source Separation (BSS) algorithm 204. Unlike time-delay methodologies of the prior art, the BSS algorithm 204 mathematically decomposes "
-        "the mixed multi-channel signal into a set of maximally independent latent source components, for example a first latent source stream 206a and a second latent source stream 206b. In a preferred embodiment, "
-        "FastICA (Fast Independent Component Analysis) is utilized to generate a set of continuous, disentangled waveforms corresponding "
-        "to the individual physiological rhythms (e.g., ballistocardiogram signatures) of each occupant, such as a first physiological rhythm 208a corresponding to the first subject 150a, and a second physiological rhythm 208b corresponding to the second subject 150b.", indent=True)
+        "[0016] As shown in FIGS. 3 and 4, the buffered mixed signals from the sensors, such as mixed signals 401, 402, and 403, are passed to a signal separation engine 404 (corresponding to the signal separation module 105). The signal separation engine 404 executes "
+        "a Blind Source Separation (BSS) algorithm. As illustrated by equations 306, the sensors 303, 304, 305 record a linear mixture of the latent sources, such as heartbeat A 301 and heartbeat B 302. The signal separation engine 404 mathematically decomposes "
+        "the mixed multi-channel signals into a set of maximally independent latent source components. In a preferred embodiment, "
+        "this generates a set of continuous, disentangled waveforms corresponding "
+        "to the individual physiological rhythms, such as a recovered heartbeat A 405 corresponding to PERSON A, and a recovered heartbeat B 406 corresponding to PERSON B.", indent=True)
 
-    add_heading(doc, 'The Occupant Attribution Engine', level=2)
     add_paragraph(doc,
-        "[0020] Referring to FIG. 6, because BSS algorithms inherently suffer from permutation ambiguity (the order of the output sources is random), the Occupant "
-        "Attribution Engine 300 must resolve which latent source 206a, 206b corresponds to which physical occupant 150a, 150b. The Occupant Attribution Engine 300 calculates a first spatial "
-        "fingerprint 302a for the first latent source 206a and a second spatial fingerprint 302b for the second latent source 206b by determining its cross-correlation with the raw, unfiltered signals originating from specific "
-        "physical locations (e.g., Left Sensor 104a vs. Right Sensor 104b). By fusing spatial correlation, signal energy, and historical baseline "
-        "metrics, the Occupant Attribution Engine 300 formulates a probabilistic assignment matrix 304. The difference between the highest and second-highest assignment "
-        "probabilities is mapped to an Attribution Confidence Score 306.", indent=True)
+        "[0017] Referring back to FIG. 1, because BSS algorithms inherently suffer from permutation ambiguity, an occupant identification module 108 must resolve which latent source corresponds to which physical occupant. The occupant identification module 108 calculates a spatial "
+        "fingerprint for the recovered heartbeats 405, 406 by determining cross-correlations with the raw, unfiltered signals originating from specific "
+        "physical locations (e.g., S1 201 vs. S3 203). By fusing spatial correlation and signal energy, the occupant identification module 108 formulates a probabilistic assignment matrix. "
+        "A heartbeat detection module 106 and heart rate calculation module 107 then extract the final physiological metrics. The metrics are transmitted via a wireless communication module 109 to a user interface 110.", indent=True)
 
-    add_heading(doc, 'The Identity Persistence Engine', level=2)
     add_paragraph(doc,
-        "[0021] As illustrated in FIG. 7 and FIG. 8, continuous physiological monitoring is highly susceptible to momentary artifacts. The Identity Persistence Engine 400 prevents "
-        "transient assignment errors from corrupting longitudinal sleep metrics. The Identity Persistence Engine 400 maintains a running memory of the active "
-        "identity mapping 402 via a state machine 404. If the Occupant Attribution Engine 300 proposes a mapping that contradicts the active identity mapping 402 (e.g., suggesting "
-        "first subject 150a is now on the second sensor 104b), the Identity Persistence Engine 400 evaluates the Attribution Confidence Score 306 against a "
-        "pre-configured swap-threshold (e.g., 80% confidence). If the threshold is not met, the proposed swap is rejected as noise, "
-        "and the active identity mapping 402 is persisted. If the threshold is exceeded, the swap is approved, accommodating legitimate physical "
-        "crossover events without losing the continuous physiological thread of either subject 150a, 150b.", indent=True)
+        "[0018] Continuous physiological monitoring is highly susceptible to momentary artifacts. To prevent "
+        "transient assignment errors from corrupting longitudinal sleep metrics, the processing unit 104 maintains a running memory of the active "
+        "identity mapping. If a mapping is proposed that contradicts the active identity mapping (e.g., suggesting "
+        "PERSON A is now on the sensor 203), the system evaluates an attribution confidence score against a "
+        "pre-configured swap-threshold. If the threshold is not met, the proposed swap is rejected as noise, "
+        "and the active identity mapping is persisted. If the threshold is exceeded, the swap is approved, accommodating legitimate physical "
+        "crossover events without losing the continuous physiological thread of either subject.", indent=True)
+
+    # Industrial Applicability
+    add_heading(doc, 'Industrial Applicability', level=2)
+    add_paragraph(doc, 
+        "[0019] The invention is industrially applicable in the manufacturing of medical devices, consumer health monitoring products, and smart home appliances. "
+        "It can be implemented as a commercial under-mattress sleep monitor, integrated directly into smart beds, or utilized in clinical settings for non-obtrusive patient monitoring.", indent=True)
 
     doc.add_page_break()
 
     # Claims
-    add_heading(doc, 'CLAIMS', level=1)
+    add_heading(doc, 'Claims', level=1)
     add_paragraph(doc, "What is claimed is:")
     
     claims = [
@@ -192,7 +195,7 @@ def create_patent_doc(filename):
     doc.add_page_break()
     
     # Abstract
-    add_heading(doc, 'ABSTRACT OF THE DISCLOSURE', level=1).alignment = WD_ALIGN_PARAGRAPH.CENTER
+    add_heading(doc, 'Abstract', level=1).alignment = WD_ALIGN_PARAGRAPH.CENTER
     add_paragraph(doc, 
         "[0000] A system and method for continuous, multi-target physiological monitoring that separates and persistently tracks "
         "signals from multiple subjects sharing a monitored environment. The system comprises a sensor array to capture a "
