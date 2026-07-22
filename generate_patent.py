@@ -208,6 +208,7 @@ def create_patent_doc(filename):
         indent=True)
 
     # Drawings Section
+    # Note: These image files must exist in the same directory as this script.
     image_files = [
         'ChatGPT Image Jul 22, 2026, 06_18_41 AM.png',
         'ChatGPT Image Jul 22, 2026, 06_18_41 AM1.png',
