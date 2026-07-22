@@ -113,27 +113,27 @@ def create_patent_doc(filename):
 
     add_heading(doc, 'The Data Acquisition Layer', level=2)
     add_paragraph(doc,
-        "[0018] Referring to FIG. 3, the multi-target physiological monitoring system 100 comprises a Data Acquisition Layer 110 having a sensor array 102 configured for placement in proximity to the subjects. In a preferred embodiment, "
-        "the sensor array 102 comprises at least two high-sensitivity strain gauges 104, piezoelectric strips, or hydraulic sensors "
-        "disposed beneath a mattress. An analog-to-digital converter (ADC) 106 samples the signals at a high frequency (e.g., 100 Hz). "
+        "[0018] Referring to FIG. 3, the multi-target physiological monitoring system 100 comprises a Data Acquisition Layer 110 having a sensor array 102 configured for placement in proximity to the subjects, for example a first subject 150a and a second subject 150b. In a preferred embodiment, "
+        "the sensor array 102 comprises at least a first high-sensitivity strain gauge 104a and a second high-sensitivity strain gauge 104b, piezoelectric strips, or hydraulic sensors "
+        "disposed beneath a mattress. A first analog-to-digital converter (ADC) 106a and a second analog-to-digital converter (ADC) 106b sample the signals at a high frequency (e.g., 100 Hz). "
         "The raw data is continuously buffered into overlapping or non-overlapping temporal windows (e.g., 10-second intervals) "
         "for batch processing within a buffer 112.", indent=True)
 
     add_heading(doc, 'The Source Recovery Engine', level=2)
     add_paragraph(doc,
-        "[0019] As shown in FIGS. 4 and 5, the buffered mixed signals are passed to the Source Recovery Engine 200. First, a bandpass filter 202 isolates specific frequency "
+        "[0019] As shown in FIGS. 4 and 5, the buffered mixed signals from the first sensor 104a and the second sensor 104b are passed to the Source Recovery Engine 200. First, a bandpass filter 202 isolates specific frequency "
         "bands of physiological interest, such as 0.8 Hz to 3.0 Hz for human heart rate. Following filtration, the Source Recovery Engine 200 executes "
         "a Blind Source Separation (BSS) algorithm 204. Unlike time-delay methodologies of the prior art, the BSS algorithm 204 mathematically decomposes "
-        "the mixed multi-channel signal into a set of maximally independent latent source components. In a preferred embodiment, "
+        "the mixed multi-channel signal into a set of maximally independent latent source components, for example a first latent source stream 206a and a second latent source stream 206b. In a preferred embodiment, "
         "FastICA (Fast Independent Component Analysis) is utilized to generate a set of continuous, disentangled waveforms corresponding "
-        "to the individual physiological rhythms (e.g., ballistocardiogram signatures) of each occupant.", indent=True)
+        "to the individual physiological rhythms (e.g., ballistocardiogram signatures) of each occupant, such as a first physiological rhythm 208a corresponding to the first subject 150a, and a second physiological rhythm 208b corresponding to the second subject 150b.", indent=True)
 
     add_heading(doc, 'The Occupant Attribution Engine', level=2)
     add_paragraph(doc,
         "[0020] Referring to FIG. 6, because BSS algorithms inherently suffer from permutation ambiguity (the order of the output sources is random), the Occupant "
-        "Attribution Engine 300 must resolve which latent source corresponds to which physical occupant. The Occupant Attribution Engine 300 calculates a spatial "
-        "fingerprint 302 for each latent source by determining its cross-correlation with the raw, unfiltered signals originating from specific "
-        "physical locations (e.g., Left Sensor vs. Right Sensor). By fusing spatial correlation, signal energy, and historical baseline "
+        "Attribution Engine 300 must resolve which latent source 206a, 206b corresponds to which physical occupant 150a, 150b. The Occupant Attribution Engine 300 calculates a first spatial "
+        "fingerprint 302a for the first latent source 206a and a second spatial fingerprint 302b for the second latent source 206b by determining its cross-correlation with the raw, unfiltered signals originating from specific "
+        "physical locations (e.g., Left Sensor 104a vs. Right Sensor 104b). By fusing spatial correlation, signal energy, and historical baseline "
         "metrics, the Occupant Attribution Engine 300 formulates a probabilistic assignment matrix 304. The difference between the highest and second-highest assignment "
         "probabilities is mapped to an Attribution Confidence Score 306.", indent=True)
 
@@ -142,10 +142,10 @@ def create_patent_doc(filename):
         "[0021] As illustrated in FIG. 7 and FIG. 8, continuous physiological monitoring is highly susceptible to momentary artifacts. The Identity Persistence Engine 400 prevents "
         "transient assignment errors from corrupting longitudinal sleep metrics. The Identity Persistence Engine 400 maintains a running memory of the active "
         "identity mapping 402 via a state machine 404. If the Occupant Attribution Engine 300 proposes a mapping that contradicts the active identity mapping 402 (e.g., suggesting "
-        "Subject A is now on the Right Sensor), the Identity Persistence Engine 400 evaluates the Attribution Confidence Score 306 against a "
+        "first subject 150a is now on the second sensor 104b), the Identity Persistence Engine 400 evaluates the Attribution Confidence Score 306 against a "
         "pre-configured swap-threshold (e.g., 80% confidence). If the threshold is not met, the proposed swap is rejected as noise, "
         "and the active identity mapping 402 is persisted. If the threshold is exceeded, the swap is approved, accommodating legitimate physical "
-        "crossover events without losing the continuous physiological thread of either subject.", indent=True)
+        "crossover events without losing the continuous physiological thread of either subject 150a, 150b.", indent=True)
 
     doc.add_page_break()
 
@@ -206,14 +206,14 @@ def create_patent_doc(filename):
 
     # Drawings Section
     image_files = [
-        'Technical diagram of heart signal processing.png',
-        'Technical diagram of heart signal processing2.png',
-        'Technical diagram of heart signal processing3.png',
-        'Technical diagram of heart signal processing4.png',
-        'Technical diagram of heart signal processing5.png',
-        'Technical diagram of heart signal processing6.png',
-        'Technical diagram of heart signal processing7.png',
-        'Technical diagram of heart signal processing8.png'
+        'ChatGPT Image Jul 22, 2026, 06_18_41 AM.png',
+        'ChatGPT Image Jul 22, 2026, 06_18_41 AM1.png',
+        'ChatGPT Image Jul 22, 2026, 06_18_41 AM2.png',
+        'ChatGPT Image Jul 22, 2026, 06_18_41 AM3.png',
+        'ChatGPT Image Jul 22, 2026, 06_18_41 AM4.png',
+        'ChatGPT Image Jul 22, 2026, 06_18_41 AM5.png',
+        'ChatGPT Image Jul 22, 2026, 06_18_41 AM6.png',
+        'ChatGPT Image Jul 22, 2026, 06_18_41 AM7.png'
     ]
     
     for i, img_file in enumerate(image_files, 1):
