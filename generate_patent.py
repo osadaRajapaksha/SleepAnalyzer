@@ -157,24 +157,6 @@ def create_patent_doc(filename):
     add_paragraph(doc, "What is claimed is:")
     
     claims = [
-        "A method for continuous, multi-target physiological monitoring in a shared environment, the method comprising:\n"
-        "receiving, from a sensor array, a plurality of mixed physiological signals spanning a temporal window;\n"
-        "reconstructing, via a processor executing a Source Recovery Engine, a plurality of continuous latent physiological source streams from the mixed physiological signals, wherein the reconstruction is performed independently of discrete movement event detection;\n"
-        "calculating, via an Occupant Attribution Engine, an attribution mapping and a corresponding confidence score for each reconstructed latent physiological source stream based on a correlation between the reconstructed stream and the plurality of mixed physiological signals; and\n"
-        "maintaining, via an Identity Persistence Engine, a longitudinal identity association for each target by enforcing a state machine constraint, wherein an existing longitudinal identity association is overridden only if the calculated confidence score exceeds a predefined threshold.",
-        
-        "The method of claim 1, wherein reconstructing the plurality of continuous latent physiological source streams comprises applying a Blind Source Separation (BSS) algorithm to the mixed physiological signals.",
-        
-        "The method of claim 2, wherein the Blind Source Separation (BSS) algorithm is Independent Component Analysis (ICA).",
-        
-        "The method of claim 1, further comprising applying a bandpass filter to the mixed physiological signals prior to reconstructing the latent physiological source streams, wherein the bandpass filter isolates frequencies corresponding to human cardiac or respiratory activity.",
-        
-        "The method of claim 1, wherein calculating the attribution mapping comprises generating a spatial footprint by calculating a cross-correlation matrix between the continuous latent physiological source streams and the raw mixed physiological signals.",
-        
-        "The method of claim 1, wherein maintaining the longitudinal identity association comprises rejecting an attribution mapping that swaps target identities if the confidence score falls below 80 percent.",
-        
-        "The method of claim 1, wherein the sensor array comprises at least two unobtrusive sensors selected from the group consisting of strain gauges, piezoelectric elements, and hydraulic sensors.",
-        
         "A multi-target physiological monitoring system, comprising:\n"
         "a sensor array configured to acquire a plurality of mixed physiological signals;\n"
         "a processor communicatively coupled to the sensor array;\n"
@@ -184,9 +166,27 @@ def create_patent_doc(filename):
         "  generate a spatial footprint for each isolated latent physiological waveform to determine an identity assignment mapping and a confidence metric; and\n"
         "  persist a historical identity assignment mapping across sequential temporal windows, wherein the system rejects a change to the historical identity assignment mapping unless the confidence metric surpasses a defined swapping threshold.",
         
-        "The system of claim 8, wherein isolating the plurality of independent latent physiological waveforms is performed exclusively on continuous resting physiological data without requiring the detection of a movement event amplitude or time delay.",
+        "The multi-target physiological monitoring system of claim 1, wherein isolating the plurality of independent latent physiological waveforms is performed exclusively on continuous resting physiological data without requiring the detection of a movement event amplitude or time delay.",
         
-        "The system of claim 8, wherein the sensor array is adapted to be positioned beneath a mattress, and the independent latent physiological waveforms correspond to individual ballistocardiogram signatures of occupants sharing the mattress."
+        "The multi-target physiological monitoring system of claim 1, wherein the sensor array is adapted to be positioned beneath a mattress, and the independent latent physiological waveforms correspond to individual ballistocardiogram signatures of occupants sharing the mattress.",
+
+        "A method for continuous, multi-target physiological monitoring in a shared environment, the method comprising:\n"
+        "receiving, from a sensor array, a plurality of mixed physiological signals spanning a temporal window;\n"
+        "reconstructing, via a processor executing a Source Recovery Engine, a plurality of continuous latent physiological source streams from the mixed physiological signals, wherein the reconstruction is performed independently of discrete movement event detection;\n"
+        "calculating, via an Occupant Attribution Engine, an attribution mapping and a corresponding confidence score for each reconstructed latent physiological source stream based on a correlation between the reconstructed stream and the plurality of mixed physiological signals; and\n"
+        "maintaining, via an Identity Persistence Engine, a longitudinal identity association for each target by enforcing a state machine constraint, wherein an existing longitudinal identity association is overridden only if the calculated confidence score exceeds a predefined threshold.",
+        
+        "The method of claim 4, wherein reconstructing the plurality of continuous latent physiological source streams comprises applying a Blind Source Separation (BSS) algorithm to the mixed physiological signals.",
+        
+        "The method of claim 5, wherein the Blind Source Separation (BSS) algorithm is Independent Component Analysis (ICA).",
+        
+        "The method of claim 4, further comprising applying a bandpass filter to the mixed physiological signals prior to reconstructing the latent physiological source streams, wherein the bandpass filter isolates frequencies corresponding to human cardiac or respiratory activity.",
+        
+        "The method of claim 4, wherein calculating the attribution mapping comprises generating a spatial footprint by calculating a cross-correlation matrix between the continuous latent physiological source streams and the raw mixed physiological signals.",
+        
+        "The method of claim 4, wherein maintaining the longitudinal identity association comprises rejecting an attribution mapping that swaps target identities if the confidence score falls below 80 percent.",
+        
+        "The method of claim 4, wherein the sensor array comprises at least two unobtrusive sensors selected from the group consisting of strain gauges, piezoelectric elements, and hydraulic sensors."
     ]
 
     for i, claim_text in enumerate(claims, 1):
