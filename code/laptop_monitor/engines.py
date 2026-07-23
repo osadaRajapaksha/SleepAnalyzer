@@ -99,3 +99,36 @@ class IdentityPersistenceEngine:
             self.tracking_confidence = min(100.0, self.tracking_confidence + 5.0)
             
         return new_mapping, self.tracking_confidence
+
+
+class SleepStagingEngine:
+    def __init__(self, sample_rate=100):
+        self.sample_rate = sample_rate
+
+    def analyze(self, source_signal):
+        """
+        Heuristic sleep staging based on signal variance and frequency stability.
+        Returns one of: "Wake", "Light Sleep", "Deep Sleep", "REM"
+        """
+        # Calculate variance to estimate motion
+        variance = np.var(source_signal)
+        
+        # Calculate zero-crossing rate to estimate frequency stability
+        # A simple proxy for heart/respiration rate variability
+        zero_crossings = np.where(np.diff(np.sign(source_signal)))[0]
+        if len(zero_crossings) > 1:
+            intervals = np.diff(zero_crossings)
+            interval_variance = np.var(intervals)
+        else:
+            interval_variance = 0
+            
+        # Heuristics
+        # Note: These thresholds are completely arbitrary for demonstration purposes.
+        if variance > 1.5:  # High movement (assuming FastICA normalizes to var ~1, anything >1.5 is extra)
+            return "Wake"
+        elif interval_variance < 10:  # Very stable intervals (low HRV)
+            return "Deep Sleep"
+        elif interval_variance > 30: # Highly variable intervals (high HRV)
+            return "REM"
+        else:
+            return "Light Sleep"

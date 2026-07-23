@@ -3,7 +3,7 @@ import time
 import serial
 import numpy as np
 from dotenv import load_dotenv
-from engines import SourceRecoveryEngine, OccupantAttributionEngine, IdentityPersistenceEngine
+from engines import SourceRecoveryEngine, OccupantAttributionEngine, IdentityPersistenceEngine, SleepStagingEngine
 
 # Load environment variables
 load_dotenv(os.path.join(os.path.dirname(__file__), '..', '.env'))
@@ -20,6 +20,7 @@ def main():
     recovery_engine = SourceRecoveryEngine(sample_rate=SAMPLE_RATE_HZ)
     attribution_engine = OccupantAttributionEngine()
     persistence_engine = IdentityPersistenceEngine()
+    sleep_staging_engine = SleepStagingEngine(sample_rate=SAMPLE_RATE_HZ)
 
     print(f"Connecting to ESP32 on {SERIAL_PORT}...")
     try:
@@ -60,11 +61,18 @@ def main():
                 # Engine 3: Persist Identity
                 final_mapping, persist_conf = persistence_engine.update_identity(mapping, attr_conf)
                 
+                # Engine 4: Sleep Staging
+                left_source_id = final_mapping['Left']
+                right_source_id = final_mapping['Right']
+                
+                left_stage = sleep_staging_engine.analyze(separated_sources[:, left_source_id])
+                right_stage = sleep_staging_engine.analyze(separated_sources[:, right_source_id])
+                
                 print(f"--- Buffer Processed ({BUFFER_WINDOW_SEC}s) ---")
                 print(f"Attribution Confidence: {attr_conf:.2f}%")
                 print(f"Persistence Tracking Confidence: {persist_conf:.2f}%")
-                print(f"Left Occupant assigned to Source ID: {final_mapping['Left']}")
-                print(f"Right Occupant assigned to Source ID: {final_mapping['Right']}")
+                print(f"Left Occupant assigned to Source ID: {left_source_id} (Stage: {left_stage})")
+                print(f"Right Occupant assigned to Source ID: {right_source_id} (Stage: {right_stage})")
                 print("-" * 40)
                 
                 # Clear buffer (or slide window)
